@@ -11,6 +11,7 @@ module.exports = (app) => {
             .then(doc => { res.json(doc.tags) });
     });
     app.post('/api/load/images', function(req, res, next) {
+        console.log('updating tag array');
         AppModel
             .findOne()
             .then(doc => {
@@ -23,5 +24,6 @@ module.exports = (app) => {
                         doc.save(_handleError);
                     }
             });
+        next();
     });
 };

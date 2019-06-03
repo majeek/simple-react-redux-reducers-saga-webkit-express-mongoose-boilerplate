@@ -12,7 +12,8 @@ async function getImages(tag) {
 }
 
 module.exports = (app) => {
-    app.post('/api/load/images', function (req, res, next) {
+    app.post('/api/load/images', function (req, res) {
+        console.log('in load images');
         GalleryModel
             .findOne({tag: req.body.tag})
             .then(doc => {
@@ -34,13 +35,10 @@ module.exports = (app) => {
                                 gallery
                                     .save(gallery)
                                     .then(() => res.json(gallery))
-                                    .catch((err) => next(err));
                             }
                         });
                     res.end();
-                    next();
                 }
             })
-            .catch((err) => next(err));
     });
 };
