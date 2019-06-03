@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faClone, faFilter, faExpand, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import GalleryActions from '../Gallery/actions';
+import {Button} from 'primereact/button';
+
 import './Image.scss';
 
 class Image extends React.Component {
@@ -30,25 +30,17 @@ class Image extends React.Component {
         }}
       >
         <div>
-          <FontAwesomeIcon
-              className="image-icon"
-            icon={faClone}
-            title="clone"
+          <Button
+              icon="pi pi-clone"
             onClick={() => this.props.onClickClone(this.props.id)}/>
-          <FontAwesomeIcon
-              className="image-icon"
-            icon={faFilter}
-            title="filter"
+          <Button
+              icon="pi pi-filter"
             onClick={() => this.props.onClickApplyFilter(this.props.id)}/>
-          <FontAwesomeIcon
-              className="image-icon"
-            icon={faExpand}
-            title="expand"
+          <Button
+              icon="pi pi-th-large"
             onClick={() => this.props.onClickOpenLightBox(this.props.id)}/>
-          <FontAwesomeIcon
-              className="image-icon"
-            icon={faTrashAlt}
-            title="trash-alt"
+          <Button
+              icon="pi pi-trash"
             onClick={() => this.props.onClickDelete(this.props.id)}/>
         </div>
       </div>

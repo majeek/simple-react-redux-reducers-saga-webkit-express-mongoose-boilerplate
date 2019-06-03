@@ -12,39 +12,35 @@ async function getImages(tag) {
 }
 
 module.exports = (app) => {
-  app.post('/api/load/images', function (req, res, next) {
-    GalleryModel
-      .findOne({tag: req.body.tag})
-      .then(doc => {
-        if (doc != null) {
-          console.log('tag found=', req.body.tag);
-          res.json(doc.photos);
-        } else {
-          console.log('new tag=', req.body.tag);
-          getImages(req.body.tag)
-            .then(e => e.data)
-            .then(e => {
-              if (
-                e &&
-                e.photos &&
-                e.photos.photo &&
-                e.photos.photo.length > 0
-              ) {
-                let gallery = new GalleryModel({tag: req.body.tag, photos: e.photos.photo});
-                gallery
-                  .save(gallery)
-                  .then(() => res.json(gallery))
-                  .catch((err) => next(err));
-              }
-            });
-          res.end();
-        }
-      })
-      .catch((err) => next(err));
-  });
-
-
-
-
-
+    app.post('/api/load/images', function (req, res, next) {
+        GalleryModel
+            .findOne({tag: req.body.tag})
+            .then(doc => {
+                if (doc != null) {
+                    console.log('tag found=', req.body.tag);
+                    res.json(doc.photos);
+                } else {
+                    console.log('new tag=', req.body.tag);
+                    getImages(req.body.tag)
+                        .then(e => e.data)
+                        .then(e => {
+                            if (
+                                e &&
+                                e.photos &&
+                                e.photos.photo &&
+                                e.photos.photo.length > 0
+                            ) {
+                                let gallery = new GalleryModel({tag: req.body.tag, photos: e.photos.photo});
+                                gallery
+                                    .save(gallery)
+                                    .then(() => res.json(gallery))
+                                    .catch((err) => next(err));
+                            }
+                        });
+                    res.end();
+                    next();
+                }
+            })
+            .catch((err) => next(err));
+    });
 };
