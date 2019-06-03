@@ -18,8 +18,7 @@ class Gallery extends React.Component {
 
 
   componentDidMount() {
-    //this.getImages(this.props.tag);     tag: state['client'].get('tag'),
-    this.props.updateGalleryWidth(Gallery.getGalleryWidth());
+    this.props.updateGalleryWidthEventHandler(Gallery.getGalleryWidth());
   }
 
   render() {
@@ -30,16 +29,16 @@ class Gallery extends React.Component {
             key={'image-' + dto.id + idx}
             id={idx}
             dto={dto}
-            handleClone={(idx) => this.props.cloneAction(idx)}
-            handleDelete={idx => this.props.deleteAction(idx)}
-            handleLightBox={idx => this.props.setActiveImage(idx)}
+            handleClone={(idx) => this.props.cloneEventHandler(idx)}
+            handleDelete={idx => this.props.deleteEventHandler(idx)}
+            handleLightBox={idx => this.props.setActiveImageEventHandler(idx)}
             galleryWidth={this.props.galleryWidth}/>;
         })}
         {this.props.openLightBox && (
           <Lightbox
             medium={Image.urlFromDto(this.props.images.get(this.props.activeImage))}
             large={Image.urlFromDto(this.props.images.get(this.props.activeImage))}
-            onClose={() => this.props.applyCloseLightBox(this.props.activeImage)}
+            onClose={() => this.props.applyCloseLightBoxEventHandler(this.props.activeImage)}
           />)}
 
       </div>
@@ -59,22 +58,22 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadImagesAction: (images) => {
+    loadImagesEventHandler: (images) => {
       dispatch(GalleryActions.loadImagesAction(images))
     },
-    cloneAction: (idx) => {
+    cloneEventHandler: (idx) => {
       dispatch(GalleryActions.cloneAction(idx));
     },
-    deleteAction: (idx) => {
+    deleteEventHandler: (idx) => {
       dispatch(GalleryActions.deleteAction(idx));
     },
-    updateGalleryWidth: (width) => {
+    updateGalleryWidthEventHandler: (width) => {
       dispatch(GalleryActions.updateGalleryWidth(width));
     },
-    applyCloseLightBox: (idx) => {
+    applyCloseLightBoxEventHandler: (idx) => {
       dispatch(GalleryActions.unsetActiveImage(idx));
     },
-    setActiveImage: (idx) => {
+    setActiveImageEventHandler: (idx) => {
       dispatch(GalleryActions.setActiveImage(idx));
     }
   }

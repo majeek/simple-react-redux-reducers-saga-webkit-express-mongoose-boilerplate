@@ -34,10 +34,13 @@ module.exports = (app) => {
                                 let gallery = new GalleryModel({tag: req.body.tag, photos: e.photos.photo});
                                 gallery
                                     .save(gallery)
-                                    .then(() => res.json(gallery))
+                                    .then(() => {
+                                        res.json(gallery);
+                                        res.end();
+                                    })
                             }
                         });
-                    res.end();
+
                 }
             })
     });

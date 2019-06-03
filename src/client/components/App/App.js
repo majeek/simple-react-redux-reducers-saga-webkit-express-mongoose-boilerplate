@@ -4,26 +4,31 @@ import Gallery from '../Gallery';
 import { connect } from 'react-redux';
 import AppActions from './actions';
 import GalleryActions from '../Gallery/actions';
-import {Button} from 'primereact/button';
-import {Dropdown} from 'primereact/dropdown';
+import { Button } from 'primereact/button';
+import { Dropdown } from 'primereact/dropdown';
 
 class App extends React.Component {
+    componentDidMount() {
+        this.props.loadTagsEventHandler();
+    }
+
   render() {
+        console.log('tags=', this.props.tags);
     return (
       <div className="app-root">
         <div className="app-header">
           <h2>Flickr Gallery</h2>
           <Dropdown
               value={this.props.tag}
-              options={this.props.tags.toJSON()}
-              onChange={this.props.updateTagAction}
-              editable={true}
+              onChange={this.props.updateTagEventHandler}
+              options={this.props.tags}
               placeholder="insert a tag"
+              editable={true}
             />
           <Button
               label="Search"
               className="p-button-raised p-button-rounded"
-              onClick={() => this.props.loadImagesAction(this.props.tag)}
+              onClick={() => this.props.loadImagesEventHandler(this.props.tag)}
           />
         </div>
         <Gallery/>
@@ -36,16 +41,19 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
       tag: state['app'].get('tag'),
-      tags: state['app'].get('tags')
+      tags: state['app'].get('tags').toArray()
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateTagAction: (e) => {
+      loadTagsEventHandler: () => {
+          dispatch(AppActions.loadTagsAction());
+      },
+    updateTagEventHandler: (e) => {
       dispatch(AppActions.updateTagAction(e.value));
     },
-    loadImagesAction: (tag) => {
+    loadImagesEventHandler: (tag) => {
       dispatch(GalleryActions.loadImagesAction(tag))
     }
   }

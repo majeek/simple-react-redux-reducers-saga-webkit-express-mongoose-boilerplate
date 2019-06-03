@@ -13,7 +13,7 @@ function updateTagAction(tag) {
 function loadTagsAction(){
     return {
         type: AppActionsConstants.LOAD_TAGS,
-        uri: '/load/tags'
+        uri: '/api/load/tags'
     }
 }
 

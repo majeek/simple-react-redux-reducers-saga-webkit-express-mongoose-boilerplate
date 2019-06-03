@@ -32,16 +32,16 @@ class Image extends React.Component {
         <div>
           <Button
               icon="pi pi-clone"
-            onClick={() => this.props.onClickClone(this.props.id)}/>
+            onClick={() => this.props.onClickCloneEventHandler(this.props.id)}/>
           <Button
               icon="pi pi-filter"
-            onClick={() => this.props.onClickApplyFilter(this.props.id)}/>
+            onClick={() => this.props.onClickApplyFilterEventHandler(this.props.id)}/>
           <Button
               icon="pi pi-th-large"
-            onClick={() => this.props.onClickOpenLightBox(this.props.id)}/>
+            onClick={() => this.props.onClickOpenLightBoxEventHandler(this.props.id)}/>
           <Button
               icon="pi pi-trash"
-            onClick={() => this.props.onClickDelete(this.props.id)}/>
+            onClick={() => this.props.onClickDeleteEventHandler(this.props.id)}/>
         </div>
       </div>
     );
@@ -60,16 +60,16 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClickClone: (idx) => {
+    onClickCloneEventHandler: (idx) => {
       dispatch(GalleryActions.cloneAction(idx))
     },
-    onClickApplyFilter: (idx) => {
+    onClickApplyFilterEventHandler: (idx) => {
       dispatch(GalleryActions.applyFilterAction(idx))
     },
-    onClickDelete: (idx) => {
+    onClickDeleteEventHandler: (idx) => {
       dispatch(GalleryActions.deleteAction(idx))
     },
-    onClickOpenLightBox: (idx) => {
+    onClickOpenLightBoxEventHandler: (idx) => {
       dispatch(GalleryActions.setActiveImage(idx))
     }
   }
